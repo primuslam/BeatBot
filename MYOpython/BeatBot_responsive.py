@@ -35,6 +35,7 @@ def update(prev, val):
   # print("updated"+str(prev))
 
 
+drumbeat = Beats.Beat(Beats.Beat.beat2)
 i = 0
 temp = 0
 ser  = serial.Serial(2)
@@ -42,16 +43,12 @@ def printData(myo):
   global i
   global last_pose, temp
   (roll, pitch, yaw) = myo.getRotationScaled(2*math.pi)
-  temp, param = roll, roll-temp
+  temp, param = pitch, pitch-temp
   
-  if ismax(prev):
-    print('MAX')
-    ser.write("111")
-  if ismin(prev):
-    print('MIN')
-    ser.write("100")
+  if ismax(prev) or ismin(prev):
+    ser.write(drumbeat.next_beat())
 
-  update(prev, pitch)
+  update(prev, temp)
   i += 1
   # Print out the rotation and arm state on the same line each update
   # print '\r{:17s}'.format('*'*int(param/10))
