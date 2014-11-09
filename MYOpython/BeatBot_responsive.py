@@ -35,7 +35,7 @@ def update(prev, val):
   # print("updated"+str(prev))
 
 
-drumbeat = Beats.Beat(Beats.Beat.beat2)
+drumbeat = Beats.Beat(Beats.Beat.beat4)
 i = 0
 temp = 0
 ser  = serial.Serial(2)

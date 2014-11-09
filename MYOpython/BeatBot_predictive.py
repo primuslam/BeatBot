@@ -35,11 +35,11 @@ def update(prev, val):
   # print("updated"+str(prev))
 
 def calculate_nextbeat(pastbeats, k = 10):
-  return sum(pastbeats[:k])/k
+  return sum(pastbeats[:k])/(k)
 
 nextbeat = 999;
 pastbeats = []
-drumbeat = Beats.Beat(Beats.Beat.beat2)
+drumbeat = Beats.Beat(Beats.Beat.beat1)
 i, j = 0, 0
 temp = 0
 ser  = serial.Serial(2)
@@ -48,15 +48,21 @@ def printData(myo):
   global temp, nextbeat
   (roll, pitch, yaw) = myo.getRotationScaled(2*math.pi)
   temp, param = pitch, pitch-temp
-  
+  # print(i)
   if ismax(prev) or ismin(prev):
-    pastbeats.append(i)
+    print("OK")
+    pastbeats.append(j)
     j = 0
-    nextbeat = calculate_nextbeat
+    ser.write(drumbeat.next_beat())
+    
+    nextbeat = calculate_nextbeat(pastbeats)
+    # print(pastbeats[-10:], nextbeat)
+
     # ser.write(drumbeat.next_beat())
 
   if j == nextbeat:
     ser.write(drumbeat.next_beat())
+    j = 0
 
   update(prev, temp)
   i, j = i + 1, j + 1
