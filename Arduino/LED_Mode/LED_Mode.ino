@@ -47,7 +47,7 @@ void act(String cmd) {
   if (control >= 1) {
     digitalWrite(P3, HIGH);
   }
-  delay(150);
+  delay(1000);
   digitalWrite(P1, LOW);
   digitalWrite(P2, LOW);
   digitalWrite(P3, LOW);  
